@@ -1,0 +1,53 @@
+package oops_project;
+
+import oops_project.NewsArticle;
+import oops_project.NewsManager;
+import oops_project.SportsNews;
+import oops_project.TechNews;
+
+// Module 1: Core OOP Framework
+class NewsArticle {
+    protected String title;
+    protected String content;
+    protected String category;
+
+    public NewsArticle(String title, String content, String category) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+    }
+
+    public void display() {
+        System.out.println("[" + category + "] " + title + ": " + content);
+    }
+}
+
+class TechNews extends NewsArticle {
+    public TechNews(String title, String content) {
+        super(title, content, "Technology");
+    }
+}
+
+class SportsNews extends NewsArticle {
+    public SportsNews(String title, String content) {
+        super(title, content, "Sports");
+    }
+}
+
+class NewsManager {
+    private static int count = 0;
+
+    public void addArticle(NewsArticle article) {
+        count++;
+        System.out.println("Article #" + count + " Added:");
+        article.display();
+    }
+}
+
+public class module1 {
+    public static void main(String args[]) {
+        NewsManager manager = new NewsManager();
+        manager.addArticle(new TechNews("AI Breakthrough", "New model sets record performance!"));
+        manager.addArticle(new SportsNews("Cricket World Cup", "India wins by 6 wickets!"));
+    }
+}
