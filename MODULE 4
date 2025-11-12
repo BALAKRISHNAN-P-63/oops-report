@@ -1,0 +1,45 @@
+package oops_project;
+import java.sql.*;
+
+// Module 4: Networking and JDBC Integration
+public class module4 {
+	// Method to connect and fetch news
+	public static void main(String args[]) {
+      	String url = "jdbc:mysql://localhost:3306/newsdb?useSSL=false&serverTimezone=UTC";
+      	String user = "root";       
+      	String password = "root";  // <-- whatever you set during MySQL installation
+
+
+        try {
+            // Load MySQL Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish Connection
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("✅ Connected to MySQL successfully!");
+
+            // Execute SQL Query
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM news");
+
+            // Display Data
+            System.out.println("📰 Latest News from Database:");
+            while (rs.next()) {
+                System.out.println("- " + rs.getString("title") + ": " + rs.getString("content"));
+            }
+
+            // Close connection
+            rs.close();
+            stmt.close();
+            conn.close();
+            System.out.println("✅ Connection closed successfully.");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("❌ JDBC Driver not found! Add MySQL Connector/J to your project.");
+        } catch (SQLException e) {
+            System.out.println("❌ SQL Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("❌ Unexpected Error: " + e.getMessage());
+        }
+    }
+}
