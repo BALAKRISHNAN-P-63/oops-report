@@ -1,0 +1,45 @@
+package oops_project;
+
+import java.io.*;
+
+// Module 2: Exception Handling and Streams
+interface FileManager {
+    void save(String data) throws IOException;
+    String load() throws IOException;
+}
+
+class FileManagerImpl implements FileManager {
+    private final String filePath = "news.txt";
+
+    public void save(String data) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            bw.write(data);
+        }
+    }
+
+    public String load() throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            return br.readLine();
+        }
+    }
+}
+
+class DataException extends Exception {
+    public DataException(String message) {
+        super(message);
+    }
+}
+
+public class module2 {
+	public static void main(String args[]) {
+        try {
+            FileManager fm = new FileManagerImpl();
+            fm.save("Breaking News: Java Project Running Successfully!");
+            System.out.println("File Loaded: " + fm.load());
+        } catch (IOException e) {
+            System.out.println("I/O Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
