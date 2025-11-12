@@ -1,0 +1,32 @@
+package oops_project;
+
+import javax.swing.*;
+import java.awt.*;
+
+// Module 5: GUI with Swing
+public class module5 extends JFrame {
+
+    // Constructor to build GUI
+    public module5() {
+        setTitle("News Aggregator Dashboard");
+        setSize(500, 400);
+        setLayout(new BorderLayout());
+
+        JTextArea textArea = new JTextArea("Welcome to News Aggregator Platform!\n\nClick 'Load News' to see updates.");
+        textArea.setEditable(false);
+
+        JButton loadButton = new JButton("Load News");
+        loadButton.addActionListener(e -> textArea.append("\nLatest News: Java 21 Released Successfully!"));
+
+        add(new JScrollPane(textArea), BorderLayout.CENTER);
+        add(loadButton, BorderLayout.SOUTH);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    // Main method (entry point)
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new module5());
+    }
+}
