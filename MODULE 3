@@ -1,0 +1,49 @@
+package oops_project;
+
+import java.util.*;
+import java.util.concurrent.*;
+
+// Module 3: Generics and Multithreading
+class GenericRepository<T> {
+    private final List<T> items = new ArrayList<>();
+    public void add(T item) { items.add(item); }
+    public List<T> getAll() { return items; }
+}
+
+class NewsFetcher implements Runnable {
+    private final String source;
+
+    public NewsFetcher(String source) {
+        this.source = source;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Fetching news from: " + source + " on " + Thread.currentThread().getName());
+    }
+}
+
+class ThreadManager {
+    public void startFetchers() {
+        ExecutorService exec = Executors.newFixedThreadPool(2);
+        exec.execute(new NewsFetcher("Tech Source"));
+        exec.execute(new NewsFetcher("Sports Source"));
+        exec.shutdown();
+    }
+}
+
+public class module3 {
+	public static void main(String args[]) {
+        GenericRepository<String> repo = new GenericRepository<>();
+        repo.add("Tech: AI Revolution");
+        repo.add("Sports: Olympics 2028 Preview");
+
+        System.out.println("Stored News in Repository:");
+        for (String item : repo.getAll()) {
+            System.out.println("- " + item);
+        }
+
+        ThreadManager tm = new ThreadManager();
+        tm.startFetchers();
+    }
+}
